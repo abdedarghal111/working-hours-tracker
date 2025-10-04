@@ -1,35 +1,62 @@
 import type { Component } from 'solid-js'
+import { Alert, Button, Card, Container } from 'solid-bootstrap'
 import Versions from './components/Versions'
 import electronLogo from './assets/electron.svg'
 
 const App: Component = () => {
-  const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
+  const handlePing = (): void => window.electron.ipcRenderer.send('ping')
 
   return (
-    <>
-      <img alt="logo" class="logo" src={electronLogo} />
-      <div class="creator">Powered by electron-vite</div>
-      <div class="text">
-        Build an Electron app with <span class="solid">Solid</span>
-        &nbsp;and <span class="ts">TypeScript</span>
+    <Container class="py-5">
+      <div class="d-flex flex-column gap-4">
+        <Card class="shadow-sm">
+          <Card.Body class="d-flex flex-column flex-md-row align-items-center gap-4">
+            <img alt="Electron logo" class="logo" src={electronLogo} />
+            <div class="text-md-start text-center">
+              <Card.Title class="mb-3 fs-3">
+                Build an Electron app with Solid y TypeScript
+              </Card.Title>
+              <Card.Text class="text-muted">
+                Empieza rápido con electron-vite, SolidJS y los componentes de solid-bootstrap.
+              </Card.Text>
+              <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center justify-content-md-start mt-3">
+                <Button
+                  as="a"
+                  href="https://electron-vite.org/"
+                  target="_blank"
+                  rel="noreferrer"
+                  variant="outline-secondary"
+                >
+                  Documentación
+                </Button>
+                <Button onClick={handlePing} variant="primary">
+                  Enviar IPC
+                </Button>
+              </div>
+            </div>
+          </Card.Body>
+        </Card>
+
+        <Card class="shadow-sm">
+          <Card.Body>
+            <Card.Title class="fs-4 mb-3">Herramientas para desarrolladores</Card.Title>
+            <Alert variant="info" class="mb-0">
+              Pulsa <code>F12</code> para abrir las DevTools y depurar tu aplicación de escritorio.
+            </Alert>
+          </Card.Body>
+        </Card>
+
+        <Card class="shadow-sm">
+          <Card.Body class="text-center">
+            <Card.Title class="fs-5 mb-3">Versiones en uso</Card.Title>
+            <Card.Text class="text-muted">
+              Consulta rápidamente qué versiones de Electron, Chromium y Node alimentan la app.
+            </Card.Text>
+            <Versions />
+          </Card.Body>
+        </Card>
       </div>
-      <p class="tip">
-        Please try pressing <code>F12</code> to open the devTool
-      </p>
-      <div class="actions">
-        <div class="action">
-          <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">
-            Documentation
-          </a>
-        </div>
-        <div class="action">
-          <a target="_blank" rel="noreferrer" onClick={ipcHandle}>
-            Send IPC
-          </a>
-        </div>
-      </div>
-      <Versions />
-    </>
+    </Container>
   )
 }
 
