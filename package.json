@@ -40,7 +40,8 @@
     "bootstrap": "^5.3.8",
     "electron-updater": "^6.3.9",
     "solid-bootstrap": "^1.0.21",
-    "solid-fontawesome": "^0.2.1"
+    "solid-fontawesome": "^0.2.1",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
