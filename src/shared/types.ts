@@ -33,4 +33,5 @@ export interface IpcApi {
   onLog: (callback: (level: string, ...args: unknown[]) => void) => void
   onAppReady: (callback: () => void) => void
   frontendReady: () => Promise<void>
+  toggleDevTools: () => Promise<void>
 }

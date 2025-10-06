@@ -1,7 +1,8 @@
 import { ipcMain } from 'electron'
 import { DatabaseManager } from './class/DatabaseManager'
+import { WindowManager } from './class/WindowManager'
 
-export function registerIpcHandlers(dbManager: DatabaseManager): void {
+export function registerIpcHandlers(dbManager: DatabaseManager, windowManager: WindowManager): void {
   ipcMain.handle('timer:start', async () => {
     const startTime = new Date().toISOString()
     return dbManager.createWorkSession(startTime)
@@ -24,7 +25,7 @@ export function registerIpcHandlers(dbManager: DatabaseManager): void {
     await dbManager.endWorkSession(sessionId, endTime)
   })
 
-ipcMain.handle('timer:getState', async () => {
+  ipcMain.handle('timer:getState', async () => {
     const session = await dbManager.getActiveWorkSession()
     if (!session) {
       return null
@@ -35,5 +36,9 @@ ipcMain.handle('timer:getState', async () => {
 
   ipcMain.handle('history:get', async () => {
     return dbManager.getCompletedWorkSessions()
+  })
+
+  ipcMain.handle('dev:toggle-tools', () => {
+    windowManager.toggleDevTools()
   })
 }

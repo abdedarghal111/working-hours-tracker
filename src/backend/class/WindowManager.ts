@@ -25,6 +25,10 @@ export class WindowManager {
     return this.mainWindow
   }
 
+  public toggleDevTools(): void {
+    this.mainWindow?.webContents.toggleDevTools()
+  }
+
   private createMainWindow(): void {
     this.mainWindow = new BrowserWindow({
       width: 900,
@@ -40,7 +44,7 @@ export class WindowManager {
 
     this.mainWindow.on('ready-to-show', () => {
       this.mainWindow?.show()
-      this.mainWindow?.webContents.openDevTools()
+      // this.mainWindow?.webContents.openDevTools()
     })
 
     this.mainWindow.webContents.setWindowOpenHandler(({ url }) => {

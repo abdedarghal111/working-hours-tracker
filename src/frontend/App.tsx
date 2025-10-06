@@ -57,6 +57,14 @@ const App: Component = () => {
           </Card>
         </Container>
       </div>
+
+      <Button
+        variant="secondary"
+        class="devtools-toggle-btn shadow"
+        onClick={() => window.api.toggleDevTools()}
+      >
+        <FontAwesomeIcon icon={'gear'} />
+      </Button>
     </div>
   )
 }

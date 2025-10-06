@@ -6,10 +6,11 @@ import {
   faStop,
   faChevronRight,
   faCalendarDays,
-  faClock
+  faClock,
+  faGear
 } from '@fortawesome/free-solid-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
 config.autoAddCss = false
 
-library.add(faHouse, faPlay, faPause, faStop, faChevronRight, faCalendarDays, faClock)
+library.add(faHouse, faPlay, faPause, faStop, faChevronRight, faCalendarDays, faClock, faGear)

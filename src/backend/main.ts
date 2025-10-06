@@ -29,8 +29,8 @@ ipcMain.handle('frontend-ready', async () => {
     const dbManager = new DatabaseManager()
     await dbManager.initialize()
 
-    // 5. Register the API handlers that depend on the database.
-    registerIpcHandlers(dbManager)
+    // 5. Register the API handlers that depend on the database and window.
+    registerIpcHandlers(dbManager, windowManager)
 
     // 6. Notify the frontend that everything is ready.
     logger.log('Backend is ready. Notifying frontend.')
