@@ -10,10 +10,23 @@ export class DatabaseManager {
 
   constructor() {
     const dbName = 'workingHoursTrackerDB.sqlite'
-    // CORRECT LOCATION: Use the dedicated user data path, which is always writable.
-    const appPath = app.getPath('userData')
+
+    // For a portable app, electron-builder sets this environment variable.
+    // It points to the directory where the original .exe was launched from.
+    const portableExeDir = process.env.PORTABLE_EXECUTABLE_DIR
+
+    // In development, app.getAppPath() points to the project root.
+    const devPath = app.getAppPath()
+
+    // Use the portable directory if it exists, otherwise fall back to the dev path.
+    const appPath = portableExeDir || devPath
+
     this.dbPath = join(appPath, dbName)
-    logger.log(`Database path set to: ${this.dbPath}`)
+    logger.log(`--- Database Path Info ---`)
+    logger.log(`Portable Executable Dir: ${portableExeDir || 'Not set'}`)
+    logger.log(`App Path (Fallback): ${devPath}`)
+    logger.log(`Final Database Path: ${this.dbPath}`)
+    logger.log(`--------------------------`)
   }
 
   public initialize(): Promise<void> {
