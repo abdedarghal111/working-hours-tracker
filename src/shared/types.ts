@@ -30,4 +30,7 @@ export interface IpcApi {
   stopTimer: (sessionId: number) => Promise<void>
   getState: () => Promise<SessionData | null>
   getHistory: () => Promise<SessionData[]>
+  onLog: (callback: (level: string, ...args: unknown[]) => void) => void
+  onAppReady: (callback: () => void) => void
+  frontendReady: () => Promise<void>
 }

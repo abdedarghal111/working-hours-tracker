@@ -21,6 +21,10 @@ export class WindowManager {
     this.createMainWindow()
   }
 
+  public getMainWindow(): BrowserWindow | null {
+    return this.mainWindow
+  }
+
   private createMainWindow(): void {
     this.mainWindow = new BrowserWindow({
       width: 900,
