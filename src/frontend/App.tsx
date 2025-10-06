@@ -1,7 +1,7 @@
 import type { Component } from 'solid-js'
 import { Alert, Button, Card, Container } from 'solid-bootstrap'
-import Versions from './components/Versions'
-import electronLogo from './assets/electron.svg'
+import Versions from '@components/Versions'
+import electronLogo from '@assets/electron.svg'
 
 const App: Component = () => {
   const handlePing = (): void => window.electron.ipcRenderer.send('ping')

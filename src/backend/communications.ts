@@ -1,6 +1,6 @@
 import { contextBridge, ipcMain, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import type { RendererApi } from '../shared/ipc'
+import type { RendererApi } from '@shared/ipc'
 
 export const registerMainHandlers = (): void => {
   ipcMain.on('ping', () => {

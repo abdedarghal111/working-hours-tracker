@@ -11,11 +11,17 @@
     "jsxImportSource": "solid-js",
     "baseUrl": ".",
     "paths": {
+      "@shared/*": [
+        "src/shared/*"
+      ],
       "@frontend/*": [
         "src/frontend/*"
       ],
-      "@shared/*": [
-        "src/shared/*"
+      "@components/*": [
+        "src/frontend/components/*"
+      ],
+      "@assets/*": [
+        "assets/*"
       ]
     }
   }
