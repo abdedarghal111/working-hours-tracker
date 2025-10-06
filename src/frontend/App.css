@@ -1,0 +1,66 @@
+.app-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-content {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bs-body-bg);
+}
+
+.history-panel {
+  width: 400px;
+  position: fixed; /* Changed to fixed to overlay */
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: var(--bs-body-bg);
+  z-index: 1100; /* High z-index to be on top */
+  border-right: 1px solid #dee2e6;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(-100%); /* Start off-screen */
+}
+
+.history-panel.open {
+  transform: translateX(0);
+}
+
+.history-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1090; /* Below panel, above content */
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none; /* Not clickable when hidden */
+}
+
+.history-backdrop.show {
+  opacity: 1;
+  pointer-events: auto; /* Clickable when shown */
+}
+
+.history-toggle-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1150; /* Highest z-index */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+.history-toggle-btn.open {
+  transform: translateX(400px) rotate(180deg);
+}

@@ -156,4 +156,25 @@ export class DatabaseManager {
       )
     })
   }
+
+  public async getCompletedWorkSessions(): Promise<{ session: WorkSession; pauses: PauseInterval[] }[]> {
+    const sessions = await new Promise<WorkSession[]>((resolve, reject) => {
+      this.db.all(
+        'SELECT * FROM work_sessions WHERE end_time IS NOT NULL ORDER BY start_time DESC',
+        (err, rows: WorkSession[]) => {
+          if (err) return reject(err)
+          //console.log('Raw history from DB:', rows) // <-- DEBUG LOG
+          resolve(rows)
+        }
+      )
+    })
+
+    const fullSessions = []
+    for (const session of sessions) {
+      const pauses = await this.getPauseIntervalsForSession(session.id)
+      fullSessions.push({ session, pauses })
+    }
+
+    return fullSessions
+  }
 }
