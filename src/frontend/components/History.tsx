@@ -1,18 +1,7 @@
 import { Component, createSignal, For, createEffect } from 'solid-js'
 import { Card, ListGroup } from 'solid-bootstrap'
 import { FontAwesomeIcon } from 'solid-fontawesome'
-
-interface SessionData {
-  session: {
-    id: number
-    start_time: string
-    end_time: string
-  }
-  pauses: {
-    pause_time: string
-    resume_time: string | null
-  }[]
-}
+import { SessionData } from '@shared/types'
 
 interface HistoryProps {
   isOpen: boolean
@@ -49,7 +38,7 @@ const History: Component<HistoryProps> = (props) => {
 
   const calculateDuration = (item: SessionData): number => {
     const startTime = new Date(item.session.start_time).getTime()
-    const endTime = new Date(item.session.end_time).getTime()
+    const endTime = new Date(item.session.end_time!).getTime()
     let totalPausedTime = 0
 
     item.pauses.forEach((p) => {
@@ -88,7 +77,7 @@ const History: Component<HistoryProps> = (props) => {
                   </span>
                   Fin
                 </span>
-                <span class="text-muted small">{formatDateTime(item.session.end_time)}</span>
+                <span class="text-muted small">{formatDateTime(item.session.end_time!)}</span>
               </ListGroup.Item>
               <ListGroup.Item class="d-flex flex-column text-center py-3">
                 <span class="text-uppercase small text-muted">

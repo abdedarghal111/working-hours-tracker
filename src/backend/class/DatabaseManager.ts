@@ -1,21 +1,7 @@
 import { app } from 'electron'
 import { join, dirname } from 'path'
 import sqlite3 from 'sqlite3'
-
-// Define interfaces for our data structures
-export interface WorkSession {
-  id: number
-  start_time: string
-  end_time: string | null
-  is_paused: number
-}
-
-export interface PauseInterval {
-  id: number
-  session_id: number
-  pause_time: string
-  resume_time: string | null
-}
+import { PauseInterval, WorkSession, SessionData } from '@shared/types'
 
 export class DatabaseManager {
   private db: sqlite3.Database
@@ -157,7 +143,7 @@ export class DatabaseManager {
     })
   }
 
-  public async getCompletedWorkSessions(): Promise<{ session: WorkSession; pauses: PauseInterval[] }[]> {
+  public async getCompletedWorkSessions(): Promise<SessionData[]> {
     const sessions = await new Promise<WorkSession[]>((resolve, reject) => {
       this.db.all(
         'SELECT * FROM work_sessions WHERE end_time IS NOT NULL ORDER BY start_time DESC',
@@ -169,7 +155,7 @@ export class DatabaseManager {
       )
     })
 
-    const fullSessions = []
+    const fullSessions: SessionData[] = []
     for (const session of sessions) {
       const pauses = await this.getPauseIntervalsForSession(session.id)
       fullSessions.push({ session, pauses })

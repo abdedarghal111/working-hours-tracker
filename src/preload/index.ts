@@ -1,12 +1,13 @@
 import { contextBridge, ipcRenderer } from 'electron'
+import { type IpcApi } from '@shared/types'
 
-const api = {
-  startTimer: (): Promise<number> => ipcRenderer.invoke('timer:start'),
-  pauseTimer: (sessionId: number): Promise<void> => ipcRenderer.invoke('timer:pause', sessionId),
-  resumeTimer: (sessionId: number): Promise<void> => ipcRenderer.invoke('timer:resume', sessionId),
-  stopTimer: (sessionId: number): Promise<void> => ipcRenderer.invoke('timer:stop', sessionId),
-  getState: (): Promise<any> => ipcRenderer.invoke('timer:getState'),
-  getHistory: (): Promise<any[]> => ipcRenderer.invoke('history:get')
+const api: IpcApi = {
+  startTimer: () => ipcRenderer.invoke('timer:start'),
+  pauseTimer: (sessionId: number) => ipcRenderer.invoke('timer:pause', sessionId),
+  resumeTimer: (sessionId: number) => ipcRenderer.invoke('timer:resume', sessionId),
+  stopTimer: (sessionId: number) => ipcRenderer.invoke('timer:stop', sessionId),
+  getState: () => ipcRenderer.invoke('timer:getState'),
+  getHistory: () => ipcRenderer.invoke('history:get')
 }
 
 try {

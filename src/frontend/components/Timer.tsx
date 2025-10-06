@@ -1,36 +1,24 @@
 import { createSignal, onCleanup, Component, onMount } from 'solid-js'
 import { FontAwesomeIcon } from 'solid-fontawesome'
 import { Button } from 'solid-bootstrap'
+import { SessionData } from '@shared/types'
 
 import startSound from '@assets/sounds/startTimer.mp3'
 import pauseSound from '@assets/sounds/pauseTimer.mp3'
 import resumeSound from '@assets/sounds/resumeTimer.mp3'
 import stopSound from '@assets/sounds/stopTimer.mp3'
 
-// Define the structure of our timer state
-interface TimerState {
-  session: {
-    id: number
-    start_time: string
-    is_paused: number
-  }
-  pauses: {
-    pause_time: string
-    resume_time: string | null
-  }[]
-}
-
-const playSound = (soundFile: string) => {
+const playSound = (soundFile: string): void => {
   new Audio(soundFile).play().catch((e) => console.error('Error playing sound:', e))
 }
 
 const Timer: Component = () => {
-  const [timerState, setTimerState] = createSignal<TimerState | null>(null)
+  const [timerState, setTimerState] = createSignal<SessionData | null>(null)
   const [displayTime, setDisplayTime] = createSignal(0)
 
   let displayInterval: number | undefined
 
-  const calculateElapsedTime = (state: TimerState): number => {
+  const calculateElapsedTime = (state: SessionData): number => {
     const startTime = new Date(state.session.start_time).getTime()
     let totalPausedTime = 0
 
@@ -47,23 +35,23 @@ const Timer: Component = () => {
     return Math.floor(elapsed / 1000)
   }
 
-  const updateDisplay = () => {
+  const updateDisplay = (): void => {
     const state = timerState()
     if (state && !state.session.is_paused) {
       setDisplayTime(calculateElapsedTime(state))
     }
   }
 
-  const startDisplayUpdates = () => {
+  const startDisplayUpdates = (): void => {
     if (displayInterval) clearInterval(displayInterval)
     displayInterval = window.setInterval(updateDisplay, 1000)
   }
 
-  const stopDisplayUpdates = () => {
+  const stopDisplayUpdates = (): void => {
     if (displayInterval) clearInterval(displayInterval)
   }
 
-  onMount(async () => {
+  onMount(async (): Promise<void> => {
     const state = await window.api.getState()
     if (state) {
       setTimerState(state)
@@ -76,7 +64,7 @@ const Timer: Component = () => {
 
   onCleanup(stopDisplayUpdates)
 
-  const handleStart = async () => {
+  const handleStart = async (): Promise<void> => {
     await window.api.startTimer()
     playSound(startSound)
     const state = await window.api.getState()
@@ -84,7 +72,7 @@ const Timer: Component = () => {
     startDisplayUpdates()
   }
 
-  const handlePause = async () => {
+  const handlePause = async (): Promise<void> => {
     const state = timerState()
     if (state) {
       await window.api.pauseTimer(state.session.id)
@@ -95,7 +83,7 @@ const Timer: Component = () => {
     }
   }
 
-  const handleResume = async () => {
+  const handleResume = async (): Promise<void> => {
     const state = timerState()
     if (state) {
       await window.api.resumeTimer(state.session.id)
@@ -106,7 +94,7 @@ const Timer: Component = () => {
     }
   }
 
-  const handleStop = async () => {
+  const handleStop = async (): Promise<void> => {
     const state = timerState()
     if (state) {
       await window.api.stopTimer(state.session.id)
@@ -126,8 +114,8 @@ const Timer: Component = () => {
     ).padStart(2, '0')}`
   }
 
-  const isRunning = () => timerState() && !timerState()?.session.is_paused
-  const isPaused = () => timerState() && timerState()?.session.is_paused
+  const isRunning = (): boolean => !!(timerState() && timerState()?.session.is_paused === 0)
+  const isPaused = (): boolean => !!(timerState() && timerState()?.session.is_paused === 1)
 
   return (
     <>
