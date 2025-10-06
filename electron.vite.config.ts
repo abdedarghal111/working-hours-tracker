@@ -26,7 +26,7 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()],
     build: {
       lib: {
-        entry: 'src/backend/communications.ts'
+        entry: 'src/preload/index.ts'
       }
     },
     resolve: aliases

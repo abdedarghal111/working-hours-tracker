@@ -6,3 +6,4 @@ out
 *.log*
 pnpm-lock.yaml
 yarn.lock
+workingHoursTrackerDB.sqlite

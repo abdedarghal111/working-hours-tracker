@@ -29,13 +29,14 @@ export class WindowManager {
       autoHideMenuBar: true,
       ...(process.platform === 'linux' ? { icon } : {}),
       webPreferences: {
-        preload: join(__dirname, '../preload/communications.js'),
+        preload: join(__dirname, '../preload/index.js'),
         sandbox: false
       }
     })
 
     this.mainWindow.on('ready-to-show', () => {
       this.mainWindow?.show()
+      this.mainWindow?.webContents.openDevTools()
     })
 
     this.mainWindow.webContents.setWindowOpenHandler(({ url }) => {
