@@ -7,7 +7,7 @@ const aliases: AliasOptions = {
   '@shared': resolve('src', 'shared'),
   '@frontend': resolve('src', 'frontend'),
   '@components': resolve('src', 'frontend', 'components'),
-  '@assets': resolve('src', '..', 'assets')
+  '@assets': resolve('assets')
 }
 
 export default defineConfig({

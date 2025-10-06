@@ -2,6 +2,11 @@ import { createSignal, onCleanup, Component, onMount } from 'solid-js'
 import { FontAwesomeIcon } from 'solid-fontawesome'
 import { Button } from 'solid-bootstrap'
 
+import startSound from '@assets/sounds/startTimer.mp3'
+import pauseSound from '@assets/sounds/pauseTimer.mp3'
+import resumeSound from '@assets/sounds/resumeTimer.mp3'
+import stopSound from '@assets/sounds/stopTimer.mp3'
+
 // Define the structure of our timer state
 interface TimerState {
   session: {
@@ -13,6 +18,10 @@ interface TimerState {
     pause_time: string
     resume_time: string | null
   }[]
+}
+
+const playSound = (soundFile: string) => {
+  new Audio(soundFile).play().catch((e) => console.error('Error playing sound:', e))
 }
 
 const Timer: Component = () => {
@@ -29,7 +38,6 @@ const Timer: Component = () => {
       if (p.resume_time) {
         totalPausedTime += new Date(p.resume_time).getTime() - new Date(p.pause_time).getTime()
       } else {
-        // If it's currently paused, calculate pause time up to now
         totalPausedTime += new Date().getTime() - new Date(p.pause_time).getTime()
       }
     })
@@ -70,6 +78,7 @@ const Timer: Component = () => {
 
   const handleStart = async () => {
     await window.api.startTimer()
+    playSound(startSound)
     const state = await window.api.getState()
     setTimerState(state)
     startDisplayUpdates()
@@ -79,6 +88,7 @@ const Timer: Component = () => {
     const state = timerState()
     if (state) {
       await window.api.pauseTimer(state.session.id)
+      playSound(pauseSound)
       const newState = await window.api.getState()
       setTimerState(newState)
       stopDisplayUpdates()
@@ -89,6 +99,7 @@ const Timer: Component = () => {
     const state = timerState()
     if (state) {
       await window.api.resumeTimer(state.session.id)
+      playSound(resumeSound)
       const newState = await window.api.getState()
       setTimerState(newState)
       startDisplayUpdates()
@@ -99,6 +110,7 @@ const Timer: Component = () => {
     const state = timerState()
     if (state) {
       await window.api.stopTimer(state.session.id)
+      playSound(stopSound)
       setTimerState(null)
       setDisplayTime(0)
       stopDisplayUpdates()
