@@ -1,6 +1,14 @@
 import { resolve } from 'path'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import solid from 'vite-plugin-solid'
+import { type AliasOptions } from 'vite'
+
+const aliases: AliasOptions = {
+  '@shared': resolve('src', 'shared'),
+  '@frontend': resolve('src', 'frontend'),
+  '@components': resolve('src', 'frontend', 'components'),
+  '@assets': resolve('src', '..', 'assets')
+}
 
 export default defineConfig({
   main: {
@@ -11,12 +19,7 @@ export default defineConfig({
       }
     },
     resolve: {
-      alias: {
-        '@shared': resolve('src', 'shared'),
-        '@frontend': resolve('src', 'frontend'),
-        '@components': resolve('src', 'frontend', 'components'),
-        '@assets': resolve('src', '..', 'assets')
-      }
+      alias: aliases
     }
   },
   preload: {
@@ -26,14 +29,7 @@ export default defineConfig({
         entry: 'src/backend/communications.ts'
       }
     },
-    resolve: {
-      alias: {
-        '@shared': resolve('src', 'shared'),
-        '@frontend': resolve('src', 'frontend'),
-        '@components': resolve('src', 'frontend', 'components'),
-        '@assets': resolve('src', '..', 'assets')
-      }
-    }
+    resolve: aliases
   },
   renderer: {
     root: resolve('src', 'frontend'),
@@ -43,12 +39,7 @@ export default defineConfig({
       }
     },
     resolve: {
-      alias: {
-        '@shared': resolve('src', 'shared'),
-        '@frontend': resolve('src', 'frontend'),
-        '@components': resolve('src', 'frontend', 'components'),
-        '@assets': resolve('src', '..', 'assets')
-      }
+      alias: aliases
     },
     plugins: [solid()]
   }

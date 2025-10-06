@@ -1,5 +1,3 @@
-// TODO: resolver bug de icono y refactorizar el destrozo de la ia
-
 import { app, BrowserWindow, shell } from 'electron'
 import { join } from 'path'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
@@ -34,7 +32,7 @@ export class WindowManager {
       autoHideMenuBar: true,
       ...(process.platform === 'linux' ? { icon } : {}),
       webPreferences: {
-        preload: join(__dirname, '../preload/index.js'),
+        preload: join(__dirname, '../preload/communications.js'),
         sandbox: false
       }
     })
