@@ -1,3 +1,1 @@
-export type RendererApi = {
-  ping: () => void
-}
+// No shared types needed for now

@@ -2,7 +2,6 @@ import { app, BrowserWindow, shell } from 'electron'
 import { join } from 'path'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import icon from '@assets/icon.png?asset'
-import { registerMainHandlers } from '../communications'
 
 export class WindowManager {
   private mainWindow: BrowserWindow | null = null
@@ -18,8 +17,6 @@ export class WindowManager {
 
     app.on('activate', this.handleActivate)
     app.on('window-all-closed', this.handleAllClosed)
-
-    registerMainHandlers()
 
     this.createMainWindow()
   }

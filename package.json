@@ -33,9 +33,14 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-brands-svg-icons": "^7.1.0",
+    "@fortawesome/free-regular-svg-icons": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "bootstrap": "^5.3.8",
     "electron-updater": "^6.3.9",
-    "solid-bootstrap": "^1.0.21"
+    "solid-bootstrap": "^1.0.21",
+    "solid-fontawesome": "^0.2.1"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",

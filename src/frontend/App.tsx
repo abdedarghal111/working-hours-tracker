@@ -1,61 +1,57 @@
-import type { Component } from 'solid-js'
-import { Alert, Button, Card, Container } from 'solid-bootstrap'
-import Versions from '@components/Versions'
-import electronLogo from '@assets/electron.svg'
+import { createSignal, onCleanup, Component } from 'solid-js'
+import { FontAwesomeIcon } from 'solid-fontawesome'
+import { Container, Button, Card } from 'solid-bootstrap'
 
 const App: Component = () => {
-  const handlePing = (): void => window.electron.ipcRenderer.send('ping')
+  const [time, setTime] = createSignal(0)
+  const [isActive, setIsActive] = createSignal(false)
+
+  let interval: number | undefined
+
+  const startTimer = (): void => {
+    setIsActive(true)
+    interval = window.setInterval(() => {
+      setTime((prevTime) => prevTime + 1)
+    }, 1000)
+  }
+
+  const pauseTimer = (): void => {
+    setIsActive(false)
+    if (interval) {
+      window.clearInterval(interval)
+    }
+  }
+
+  onCleanup(() => {
+    if (interval) {
+      window.clearInterval(interval)
+    }
+  })
+
+  const formatTime = (timeInSeconds: number): string => {
+    const hours = Math.floor(timeInSeconds / 3600)
+    const minutes = Math.floor((timeInSeconds % 3600) / 60)
+    const seconds = timeInSeconds % 60
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(
+      seconds
+    ).padStart(2, '0')}`
+  }
 
   return (
-    <Container class="py-5">
-      <div class="d-flex flex-column gap-4">
-        <Card class="shadow-sm">
-          <Card.Body class="d-flex flex-column flex-md-row align-items-center gap-4">
-            <img alt="Electron logo" class="logo" src={electronLogo} />
-            <div class="text-md-start text-center">
-              <Card.Title class="mb-3 fs-3">
-                Build an Electron app with Solid y TypeScript
-              </Card.Title>
-              <Card.Text class="text-muted">
-                Empieza rapido con electron-vite, SolidJS y los componentes de solid-bootstrap.
-              </Card.Text>
-              <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center justify-content-md-start mt-3">
-                <Button
-                  as="a"
-                  href="https://electron-vite.org/"
-                  target="_blank"
-                  rel="noreferrer"
-                  variant="outline-secondary"
-                >
-                  Documentacion
-                </Button>
-                <Button onClick={handlePing} variant="primary">
-                  Enviar IPC
-                </Button>
-              </div>
-            </div>
-          </Card.Body>
-        </Card>
-
-        <Card class="shadow-sm">
-          <Card.Body>
-            <Card.Title class="fs-4 mb-3">Herramientas para desarrolladores</Card.Title>
-            <Alert variant="info" class="mb-0">
-              Pulsa <code>F12</code> para abrir las DevTools y depurar tu aplicacion de escritorio.
-            </Alert>
-          </Card.Body>
-        </Card>
-
-        <Card class="shadow-sm">
-          <Card.Body class="text-center">
-            <Card.Title class="fs-5 mb-3">Versiones en uso</Card.Title>
-            <Card.Text class="text-muted">
-              Consulta rapidamente que versiones de Electron, Chromium y Node alimentan la app.
-            </Card.Text>
-            <Versions />
-          </Card.Body>
-        </Card>
-      </div>
+    <Container class="d-flex justify-content-center align-items-center vh-100">
+      <Card class="shadow-sm text-center" style={{ width: '30rem' }}>
+        <Card.Body>
+          <div class="display-1 fw-bold mb-4">{formatTime(time())}</div>
+          <div>
+            <Button variant="success" class="me-2" onClick={startTimer} disabled={isActive()}>
+              <FontAwesomeIcon icon={'play'} />
+            </Button>
+            <Button variant="warning" onClick={pauseTimer} disabled={!isActive()}>
+              <FontAwesomeIcon icon={'pause'} />
+            </Button>
+          </div>
+        </Card.Body>
+      </Card>
     </Container>
   )
 }
