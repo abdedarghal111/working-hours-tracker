@@ -1,5 +1,5 @@
 import { app, dialog } from 'electron'
-import { join } from 'path'
+import { join, dirname } from 'path'
 import sqlite3 from 'sqlite3'
 import { PauseInterval, WorkSession, SessionData } from '@shared/types'
 import { logger } from '../logger'
@@ -10,23 +10,23 @@ export class DatabaseManager {
 
   constructor() {
     const dbName = 'workingHoursTrackerDB.sqlite'
+    let dbDirectory: string
 
-    // For a portable app, electron-builder sets this environment variable.
-    // It points to the directory where the original .exe was launched from.
-    const portableExeDir = process.env.PORTABLE_EXECUTABLE_DIR
+    // Check if the app is packaged (e.g., installed, portable, unpacked)
+    if (app.isPackaged) {
+      // If packaged, the database should be next to the executable
+      dbDirectory = dirname(app.getPath('exe'))
+    } else {
+      // In development, use the project's root directory
+      dbDirectory = app.getAppPath()
+    }
 
-    // In development, app.getAppPath() points to the project root.
-    const devPath = app.getAppPath()
-
-    // Use the portable directory if it exists, otherwise fall back to the dev path.
-    const appPath = portableExeDir || devPath
-
-    this.dbPath = join(appPath, dbName)
-    logger.log(`--- Database Path Info ---`)
-    logger.log(`Portable Executable Dir: ${portableExeDir || 'Not set'}`)
-    logger.log(`App Path (Fallback): ${devPath}`)
+    this.dbPath = join(dbDirectory, dbName)
+    logger.log(`--- Database Path Info (Portable Mode) ---`)
+    logger.log(`Is Packaged: ${app.isPackaged}`)
+    logger.log(`Base Directory for DB: ${dbDirectory}`)
     logger.log(`Final Database Path: ${this.dbPath}`)
-    logger.log(`--------------------------`)
+    logger.log(`-------------------------------------------`)
   }
 
   public initialize(): Promise<void> {
