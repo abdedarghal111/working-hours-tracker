@@ -8,11 +8,20 @@
   "build": {
     "appId": "es.abderra.workinghourstracker",
     "productName": "Working Hours Tracker",
+    "directories": {
+      "buildResources": "build"
+    },
     "win": {
       "target": [
         "portable"
       ],
-      "icon": "build/icon.ico"
+      "icon": "build/icons/icon.ico"
+    },
+    "mac": {
+      "icon": "build/icons/icon.icns"
+    },
+    "linux": {
+      "icon": "build/icons/icon.png"
     }
   },
   "scripts": {
