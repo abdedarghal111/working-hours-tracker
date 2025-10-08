@@ -9,13 +9,16 @@ Esta aplicación nació de la necesidad personal de automatizar y simplificar el
 
 ## Características
 
-- **Inicio/Parada Sencilla:** Controla tu tiempo con un solo clic.
+- **Control del tiempo:** Controla tu tiempo con un solo clic.
 - **Gestión de Pausas:** Pausa y reanuda el temporizador tantas veces como necesites.
 - **Historial de Sesiones:** Revisa todas tus sesiones de trabajo anteriores.
-- **Portable:** Diseñada para funcionar desde cualquier carpeta sin instalación.
+- **Portable:** Diseñada para funcionar como aplicación portable.
+- **Datos independientes:** Si existen los datos los carga y son fáciles de rescatar y mover a otra instalación.
 - **Persistente:** Si en cualquier comento se cierra la aplicación se renaura automáticamente al volver a inciarse manteniendo el tracking.
 
 ## Comandos
+
+**Testeado en windows.** Recomiendo usar el ejecutable win-unpacked y crear un acceso directo para la mejor experiencia.
 
 ```bash
 # Instalar dependencias
