@@ -1,5 +1,9 @@
 # Working Hours Tracker
 
+<p align="center">
+    <img src="https://raw.githubusercontent.com/abdedarghal111/working-hours-tracker/refs/heads/main/assets/icon.png" alt="App icon" width="200">
+</p>
+
 Un sencillo pero potente tracker de horas de trabajo construido con Electron, React, TypeScript y Bootstrap.
 Simple but powerfull hours tracker / time tracker builded with Electron, Solid.js, Typescript and Bootstrap.
 
