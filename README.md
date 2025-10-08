@@ -28,6 +28,7 @@ yarn install
 yarn dev
 
 # Compilar para Windows
+# tienes que activar el modo desarrollador en los ajustes para que no te de "error de simlinks"
 yarn build:win
 
 # Compilar para macOS
