@@ -1,5 +1,7 @@
+//TODO: Arreglar el bug de mierda de path malo en el ejecutable portable
+
 import { app, dialog } from 'electron'
-import { join, dirname } from 'path'
+import { join } from 'path'
 import sqlite3 from 'sqlite3'
 import { PauseInterval, WorkSession, SessionData } from '@shared/types'
 import { logger } from '../logger'
@@ -12,18 +14,24 @@ export class DatabaseManager {
     const dbName = 'workingHoursTrackerDB.sqlite'
     let dbDirectory: string
 
-    // Check if the app is packaged (e.g., installed, portable, unpacked)
-    if (app.isPackaged) {
-      // If packaged, the database should be next to the executable
-      dbDirectory = dirname(app.getPath('exe'))
+    logger.log(app.getAppPath()) // win-unpacked/resources\app.asar path
+    logger.log(process.cwd()) // win-unpacked correct path
+    logger.log(app.getPath('exe'))
+    const appPath = process.cwd()
+
+    // Special handling for packaged Windows apps
+    if (process.platform === 'win32' && appPath.includes('app.asar')) {
+      // Go two directories up from the 'app.asar' file to reach the root installation folder
+      dbDirectory = join(appPath, '..', '..')
     } else {
-      // In development, use the project's root directory
-      dbDirectory = app.getAppPath()
+      // Default behavior for development, macOS, Linux, or non-packaged Windows apps
+      dbDirectory = appPath
     }
 
     this.dbPath = join(dbDirectory, dbName)
-    logger.log(`--- Database Path Info (Portable Mode) ---`)
-    logger.log(`Is Packaged: ${app.isPackaged}`)
+    logger.log(`--- Database Path Info ---`)
+    logger.log(`Platform: ${process.platform}`)
+    logger.log(`App Path: ${appPath}`)
     logger.log(`Base Directory for DB: ${dbDirectory}`)
     logger.log(`Final Database Path: ${this.dbPath}`)
     logger.log(`-------------------------------------------`)
