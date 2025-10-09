@@ -1,5 +1,3 @@
-//TODO: Arreglar el bug de mierda de path malo en el ejecutable portable
-
 import { app, dialog } from 'electron'
 import { join } from 'path'
 import sqlite3 from 'sqlite3'
@@ -12,29 +10,22 @@ export class DatabaseManager {
 
   constructor() {
     const dbName = 'workingHoursTrackerDB.sqlite'
-    let dbDirectory: string
 
-    logger.log(app.getAppPath()) // win-unpacked/resources\app.asar path
-    logger.log(process.cwd()) // win-unpacked correct path
-    logger.log(app.getPath('exe'))
-    const appPath = process.cwd()
+    // logger.log('--- Standard Path Info ---')
+    // logger.log(`app.getAppPath(): ${app.getAppPath()}`)
+    // logger.log(`process.cwd(): ${process.cwd()}`)
+    // logger.log(`app.getPath('exe'): ${app.getPath('exe')}`)
+    // logger.log('--- Alternative Path Info ---')
+    // logger.log(`dirname(process.execPath): ${dirname(process.execPath)}`)
+    // logger.log(`process.resourcesPath: ${process.resourcesPath}`)
+    // logger.log(`app.getPath('appData'): ${app.getPath('appData')}`)
+    // logger.log(`process.env.PORTABLE_EXECUTABLE_DIR: ${process.env.PORTABLE_EXECUTABLE_DIR}`)
+    // logger.log('-----------------------------')
 
-    // Special handling for packaged Windows apps
-    if (process.platform === 'win32' && appPath.includes('app.asar')) {
-      // Go two directories up from the 'app.asar' file to reach the root installation folder
-      dbDirectory = join(appPath, '..', '..')
-    } else {
-      // Default behavior for development, macOS, Linux, or non-packaged Windows apps
-      dbDirectory = appPath
-    }
+    // usar la ruta del ejecutable portable si existe, si no usar la del ejecutable
+    const appPath = process.env.PORTABLE_EXECUTABLE_DIR || process.cwd()
 
-    this.dbPath = join(dbDirectory, dbName)
-    logger.log(`--- Database Path Info ---`)
-    logger.log(`Platform: ${process.platform}`)
-    logger.log(`App Path: ${appPath}`)
-    logger.log(`Base Directory for DB: ${dbDirectory}`)
-    logger.log(`Final Database Path: ${this.dbPath}`)
-    logger.log(`-------------------------------------------`)
+    this.dbPath = join(appPath, dbName)
   }
 
   public initialize(): Promise<void> {
