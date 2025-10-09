@@ -43,3 +43,13 @@ yarn build:linux
 
 # output en /dist
 ```
+
+## Images
+
+**Vistas de la aplicación:**
+<p align="center">
+    <img src="https://raw.githubusercontent.com/abdedarghal111/working-hours-tracker/refs/heads/main/.github/images/img1.png" alt="App image">
+</p>
+<p align="center">
+    <img src="https://raw.githubusercontent.com/abdedarghal111/working-hours-tracker/refs/heads/main/.github/images/img2.png" alt="App image">
+</p>
