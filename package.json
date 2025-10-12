@@ -1,29 +1,10 @@
 {
   "name": "working-hours-tracker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple but powerfull hours tracker / time tracker builded with Electron, Solid.js, Typescript and Bootstrap.",
   "main": "./out/main/main.js",
   "author": "Abderrahim Darghal Belkacemi <abdedarghal111@gmail.com>",
   "homepage": "https://electron-vite.org",
-  "build": {
-    "appId": "es.abderra.workinghourstracker",
-    "productName": "Working Hours Tracker",
-    "directories": {
-      "buildResources": "build"
-    },
-    "win": {
-      "target": [
-        "portable"
-      ],
-      "icon": "build/icons/icon.ico"
-    },
-    "mac": {
-      "icon": "build/icons/icon.icns"
-    },
-    "linux": {
-      "icon": "build/icons/icon.png"
-    }
-  },
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --cache .",

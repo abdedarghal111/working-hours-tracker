@@ -1,45 +1,35 @@
-appId: com.electron.app
-productName: working-hours-tracker
+appId: es.abderra.workinghourstracker
+productName: 'Working Hours Tracker'
+
 directories:
   buildResources: build
-files:
-  - '!**/.vscode/*'
-  - '!src/*'
-  - '!electron.vite.config.{js,ts,mjs,cjs}'
-  - '!{.eslintcache,eslint.config.mjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
-  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
-  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
-asarUnpack:
-  - resources/**
+
 win:
-  executableName: working-hours-tracker
-nsis:
-  artifactName: ${name}-${version}-setup.${ext}
-  shortcutName: ${productName}
-  uninstallDisplayName: ${productName}
-  createDesktopShortcut: always
+  target:
+    - portable
+    - zip
+  publish:
+    - provider: github
+      releaseType: release
+  icon: build/icons/icon.ico
+  artifactName: "${productName}-${version}-win.${ext}"
+
 mac:
-  entitlementsInherit: build/entitlements.mac.plist
-  extendInfo:
-    - NSCameraUsageDescription: Application requests access to the device's camera.
-    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
-    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
-    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
-  notarize: false
-dmg:
-  artifactName: ${name}-${version}.${ext}
+  target:
+    - dmg
+    - zip
+  publish:
+    - provider: github
+      releaseType: release
+  icon: build/icons/icon.icns
+  artifactName: "${productName}-${version}-mac.${ext}"
+
 linux:
   target:
     - AppImage
-    - snap
-    - deb
-  maintainer: electronjs.org
-  category: Utility
-appImage:
-  artifactName: ${name}-${version}.${ext}
-npmRebuild: false
-publish:
-  provider: generic
-  url: https://example.com/auto-updates
-electronDownload:
-  mirror: https://npmmirror.com/mirrors/electron/
+    - zip
+  publish:
+    - provider: github
+      releaseType: release
+  icon: build/icons/icon.png
+  artifactName: "${productName}-${version}-linux.${ext}"
