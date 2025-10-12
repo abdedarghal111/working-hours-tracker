@@ -4,7 +4,7 @@
   "description": "Simple but powerfull hours tracker / time tracker builded with Electron, Solid.js, Typescript and Bootstrap.",
   "main": "./out/main/main.js",
   "author": "Abderrahim Darghal Belkacemi <abdedarghal111@gmail.com>",
-  "homepage": "https://electron-vite.org",
+  "homepage": "https://github.com/abdedarghal111/working-hours-tracker",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --cache .",
