@@ -4,9 +4,9 @@
 # And then replace {ADD HERE YOUR ABSOLUTE PATH TO PROJECT} with your absolute path to project folder
 # In my case would be: '/home/abderra/userManualInstalledPrograms'
 [Desktop Entry]
-Name=ICS File Viewer
-Comment=Aplicación para previsualizar ficheros ICS en vista de calendario y ver sus detalles.
-Exec={ADD HERE YOUR ABSOLUTE PATH TO PROJECT}/working-hours-tracker/dist/linux-unpacked/ics-viewer
+Name=Working hours tracker
+Comment=Aplicación para controlar el tiempo de trabajo.
+Exec={ADD HERE YOUR ABSOLUTE PATH TO PROJECT}/working-hours-tracker/dist/linux-unpacked/working-hours-tracker
 Icon={ADD HERE YOUR ABSOLUTE PATH TO PROJECT}/working-hours-tracker/build/icons/icon.png
 Type=Application
 Categories=Utility;
